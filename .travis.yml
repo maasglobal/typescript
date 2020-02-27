@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - '10'
+before_install:
+  - yarn --cwd eslint-config-maasglobal-ts
+  - yarn --cwd maasglobal-prelude-ts
+script:
+  - yarn --cwd eslint-config-maasglobal-ts ci
+  - yarn --cwd maasglobal-prelude-ts ci
+
+
+
