@@ -41,7 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
-    "eslint-config-maasglobal-ts": "^0.0.1",
+    "eslint-config-maasglobal-ts": "^0.0.2",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.20.1",
