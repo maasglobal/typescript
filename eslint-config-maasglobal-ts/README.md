@@ -1,9 +1,4 @@
 
-# MaaS Global TypeScript Eslint Config
-Source code for [eslint-config-maasglobal-ts](https://www.npmjs.com/package/eslint-config-maasglobal-ts) npm package.
+# MaaS Global Eslint Config for TypeScript Projects
 
-
-## Index
-```
-index.js                          - shared eslint configuration
-```
+MaaS Global shared configuration for TypeScript projects.
