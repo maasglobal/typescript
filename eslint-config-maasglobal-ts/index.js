@@ -22,7 +22,10 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-inferrable-types': 1,
     '@typescript-eslint/no-object-literal-type-assertion': [0],
-    '@typescript-eslint/no-unused-vars': [1, { argsIgnorePattern: '^_', ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': [
+      1,
+      { argsIgnorePattern: '^_', ignoreRestSiblings: true },
+    ],
     '@typescript-eslint/consistent-type-definitions': [1, 'type'],
     '@typescript-eslint/prefer-nullish-coalescing': [1],
     '@typescript-eslint/prefer-optional-chain': [1],
@@ -38,7 +41,7 @@ module.exports = {
     'prettier/prettier': [
       1,
       {
-        printWidth: 120,
+        printWidth: 90,
         singleQuote: true,
         trailingComma: 'all',
         arrowParens: 'always',
