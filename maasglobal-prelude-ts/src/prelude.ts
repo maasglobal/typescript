@@ -60,6 +60,7 @@ export const NonEmptyArray = NonEmptyArrayCodec;
 export type NonEmptyArray<A> = NonEmptyArrayType<A>;
 import * as NonEmptyArray_ from 'fp-ts/lib/NonEmptyArray';
 export { NonEmptyArray_ };
+export { nonEmptyArray as NonEmptyArray__ } from 'fp-ts/lib/NonEmptyArray';
 
 // Option
 import { Option as OptionType } from 'fp-ts/lib/Option';
