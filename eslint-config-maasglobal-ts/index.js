@@ -34,7 +34,7 @@ module.exports = {
     'fp/no-rest-parameters': 0,
     'fp/no-unused-expression': 0,
     'fp/no-mutation': [1, { commonjs: true }],
-    'fp/no-mutating-methods': [2, { allowedObjects: ['Array_', 'NonEmptyArray_'] }],
+    'fp/no-mutating-methods': 0,
     'import/no-duplicates': 0,
     'import/no-unresolved': 0,
     'import/order': 1,
