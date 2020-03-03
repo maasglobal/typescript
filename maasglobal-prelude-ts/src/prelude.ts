@@ -1,21 +1,43 @@
 // TypeScript Prelude
 
-// key stuff
+import * as t from 'io-ts';
 
-export type FE<R> = () => R;
-export type II = <R>(fe: FE<R>) => R;
-export const ii: II = (fe) => fe();
+// Control Flow
 
 export { pipe } from 'fp-ts/lib/pipeable';
 export { flow } from 'fp-ts/lib/function';
 export { identity } from 'fp-ts/lib/function';
 
-// basic stuff
-export { unknown } from 'io-ts';
-export { null } from 'io-ts';
-export { string } from 'io-ts';
-export { undefined } from 'io-ts';
-export { void } from 'io-ts';
+// IIFE
+
+export type FE<R> = () => R;
+export type II = <R>(fe: FE<R>) => R;
+export const ii: II = (fe) => fe();
+
+// unknown
+const unknownExport = t.unknown;
+type unknownExport = unknown;
+export { unknownExport as unknown };
+
+// null
+const nullExport = t.null;
+type nullExport = null;
+export { nullExport as null };
+
+// string
+const stringExport = t.string;
+type stringExport = string;
+export { stringExport as string };
+
+// undefined
+const undefinedExport = t.undefined;
+type undefinedExport = undefined;
+export { undefinedExport as undefined };
+
+// void
+const voidExport = t.void;
+type voidExport = void;
+export { voidExport as void };
 
 // function
 import * as function_ from 'fp-ts/lib/function';
@@ -28,30 +50,38 @@ export { Lazy } from 'fp-ts/lib/function';
 export { Predicate } from 'fp-ts/lib/function';
 
 // boolean
-export { boolean } from 'io-ts';
+const booleanExport = t.boolean;
+type booleanExport = boolean;
+export { booleanExport as boolean };
 import * as boolean_ from 'fp-ts/lib/boolean';
 export { boolean_ };
 
 // number
-export { number } from 'io-ts';
+const numberExport = t.number;
+type numberExport = number;
+export { numberExport as number };
 export { NumberFromString as numberFromString } from 'io-ts-types/lib/NumberFromString';
 
-// Int
-export { Int } from 'io-ts';
-export { IntFromString } from 'io-ts-types/lib/IntFromString';
-
-// Record
-export { record as Record } from 'io-ts';
-import * as Record_ from 'fp-ts/lib/Record';
-export { Record_ };
-export { record as Record__ } from 'fp-ts/lib/Record';
-
 // Array
-export { array as Array } from 'io-ts';
+const ArrayExport = t.array;
+type ArrayExport<T> = Array<T>;
+export { ArrayExport as Array };
 import * as Array_ from 'fp-ts/lib/Array';
 export { Array_ };
 export { array as Array__ } from 'fp-ts/lib/Array';
 export const array = <A>(...a: Array<A>) => a;
+
+// Record
+const RecordExport = t.record;
+type RecordExport<K extends string | number | symbol, T> = Record<K, T>;
+export { RecordExport as Record };
+import * as Record_ from 'fp-ts/lib/Record';
+export { Record_ };
+export { record as Record__ } from 'fp-ts/lib/Record';
+
+// Int
+export { Int } from 'io-ts';
+export { IntFromString } from 'io-ts-types/lib/IntFromString';
 
 // NonEmptyArray
 import { nonEmptyArray as NonEmptyArrayCodec } from 'io-ts-types/lib/nonEmptyArray';
