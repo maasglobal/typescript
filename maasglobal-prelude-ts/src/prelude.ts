@@ -38,6 +38,9 @@ export { undefinedExport as undefined };
 const voidExport = t.void;
 type voidExport = void;
 export { voidExport as void };
+export const void_ = {
+  fromArray: (_va: Array<void>): void => undefined,
+};
 
 // function
 import * as function_ from 'fp-ts/lib/function';
