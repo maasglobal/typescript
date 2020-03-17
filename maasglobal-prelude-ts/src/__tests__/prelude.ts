@@ -2,6 +2,20 @@ import * as ruins from 'ruins-ts';
 import * as P from '../prelude';
 
 describe('prelude ', () => {
+  describe('void essentials', () => {
+    it('should contain void utilities', () => {
+      const log = jest.fn();
+      const hello: P.IO<void> = () => log('hello');
+      const greeter: P.IO<void> = P.pipe(
+        [hello, hello], // Array<IO<void>>
+        P.Array__.sequence(P.IO__), // IO<Array<void>>
+        P.IO_.map(P.void_.fromArray), // IO<void>
+      );
+      greeter(); // void
+      expect(log.mock.calls).toEqual([['hello'], ['hello']]);
+    });
+  });
+
   describe('Array essentials', () => {
     it('should contain array constructor', () => {
       const example: Array<number> = P.array(1, 2, 3);
