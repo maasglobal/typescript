@@ -38,6 +38,7 @@ module.exports = {
     'import/no-duplicates': 0,
     'import/no-unresolved': 0,
     'import/order': 1,
+    'no-restricted-imports': [1, 'ruins-ts'],
     'prettier/prettier': [
       1,
       {
@@ -56,6 +57,13 @@ module.exports = {
       },
       rules: {
         'fp/no-throw': 0,
+        'no-restricted-imports': 0,
+      },
+    },
+    {
+      files: ['**/__stories__/**/*'],
+      rules: {
+        'no-restricted-imports': 0,
       },
     },
   ],
