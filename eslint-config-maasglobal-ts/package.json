@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-maasglobal-ts",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "This package contains reusable eslint configuration for MaaS Global TypeScript projects.",
   "repository": {
     "type": "git",
