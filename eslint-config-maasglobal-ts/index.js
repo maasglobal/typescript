@@ -24,7 +24,7 @@ module.exports = {
     '@typescript-eslint/no-object-literal-type-assertion': [0],
     '@typescript-eslint/no-unused-vars': [
       1,
-      { argsIgnorePattern: '^_', ignoreRestSiblings: true },
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
     ],
     '@typescript-eslint/consistent-type-definitions': [1, 'type'],
     '@typescript-eslint/prefer-nullish-coalescing': [1],
