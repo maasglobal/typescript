@@ -56,6 +56,7 @@ const booleanExport = t.boolean;
 type booleanExport = boolean;
 export { booleanExport as boolean };
 export * as boolean_ from 'fp-ts/lib/boolean';
+export { BooleanFromString as booleanFromString } from 'io-ts-types/lib/BooleanFromString';
 
 // number
 const numberExport = t.number;
