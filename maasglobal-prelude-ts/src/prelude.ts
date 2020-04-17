@@ -145,6 +145,21 @@ export * as TaskEither_ from 'fp-ts/lib/TaskEither';
 export { taskEither as TaskEither__ } from 'fp-ts/lib/TaskEither';
 export { taskEitherSeq as TaskEitherSeq__ } from 'fp-ts/lib/TaskEither';
 
+// Reader
+export { Reader } from 'fp-ts/lib/Reader';
+export * as Reader_ from 'fp-ts/lib/Reader';
+export { reader as Reader__ } from 'fp-ts/lib/Reader';
+
+// ReaderTask
+export { ReaderTask } from 'fp-ts/lib/ReaderTask';
+export * as ReaderTask_ from 'fp-ts/lib/ReaderTask';
+export { readerTask as ReaderTask__ } from 'fp-ts/lib/ReaderTask';
+
+// ReaderTaskEither
+export { ReaderTaskEither } from 'fp-ts/lib/ReaderTaskEither';
+export * as ReaderTaskEither_ from 'fp-ts/lib/ReaderTaskEither';
+export { readerTaskEither as ReaderTaskEither__ } from 'fp-ts/lib/ReaderTaskEither';
+
 // Magma
 export { Magma } from 'fp-ts/lib/Magma';
 
@@ -152,9 +167,6 @@ export { Magma } from 'fp-ts/lib/Magma';
 export { Ord } from 'fp-ts/lib/Ord';
 export * as Ord_ from 'fp-ts/lib/Ord';
 export { ord as Ord__ } from 'fp-ts/lib/Ord';
-
-// Reader
-export * as Reader_ from 'fp-ts/lib/Reader';
 
 // Apply
 export * as Apply_ from 'fp-ts/lib/Apply';
