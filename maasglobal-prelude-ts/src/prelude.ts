@@ -6,6 +6,7 @@ import * as t from 'io-ts';
 
 export { pipe } from 'fp-ts/lib/pipeable';
 export { flow } from 'fp-ts/lib/function';
+export { Do as do } from 'fp-ts-contrib/lib/Do';
 export { identity } from 'fp-ts/lib/function';
 
 // IIFE
@@ -90,6 +91,11 @@ export const NonEmptyArray = NonEmptyArrayCodec;
 export type NonEmptyArray<A> = NonEmptyArrayType<A>;
 export * as NonEmptyArray_ from 'fp-ts/lib/NonEmptyArray';
 export { nonEmptyArray as NonEmptyArray__ } from 'fp-ts/lib/NonEmptyArray';
+
+// Identity
+export { Identity } from 'fp-ts/lib/Identity';
+export * as Identity_ from 'fp-ts/lib/Identity';
+export { identity as Identity__ } from 'fp-ts/lib/Identity';
 
 // Option
 import { Option as OptionType } from 'fp-ts/lib/Option';
