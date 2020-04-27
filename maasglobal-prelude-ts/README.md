@@ -31,7 +31,7 @@ const doubled = P.pipe(
 const twoIsEven = P.do(P.Identity__)
   .bind('x', 2)
   .bindL('p', ({x}) => x % 2 ? 'odd' : 'even')
-  .return(({x, p}) => (x, p) => `Number ${x} is ${p}.`);
+  .return(({x, p}) => `Number ${x} is ${p}.`);
 ```
 
 ## Some basic codecs from io-ts
