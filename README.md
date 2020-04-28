@@ -1,6 +1,6 @@
 # MaaS Global TypeScript Essentials
 
-This repository contains source code for essential MaaS Global TypeScript utilities.
+This repository contains most essential TypeScript utility packages used at MaaS Global.
 
 ## Frontend Packages
 
