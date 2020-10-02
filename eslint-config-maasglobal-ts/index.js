@@ -2,6 +2,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.eslint.json',
+    extraFileExtensions: ['.json'],
   },
   plugins: ['@typescript-eslint', 'fp', 'json', 'prettier', 'import'],
   extends: [
@@ -12,10 +13,19 @@ module.exports = {
     'plugin:import/warnings',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
+    'plugin:json/recommended',
   ],
   rules: {
     '@typescript-eslint/array-type': [1, { default: 'generic' }],
-    '@typescript-eslint/camelcase': [1, { ignoreDestructuring: true }],
+    '@typescript-eslint/naming-convention': [
+      1,
+      {
+        selector: 'default',
+        format: ['PascalCase', 'camelCase', 'UPPER_CASE'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+    ],
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/prefer-interface': 0,
     '@typescript-eslint/no-empty-interface': 0,
