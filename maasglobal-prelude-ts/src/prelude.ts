@@ -73,6 +73,15 @@ export * as Array_ from 'fp-ts/lib/Array';
 export { array as Array__ } from 'fp-ts/lib/Array';
 export const array = <A>(...a: Array<A>) => a;
 
+// Tuple
+const TupleCodec = t.tuple;
+type TupleType<T extends Array<any>> = T;
+export const Tuple = TupleCodec;
+export type Tuple<T extends Array<any>> = TupleType<T>;
+export * as Tuple_ from 'fp-ts/lib/Tuple';
+export { tuple as Tuple__ } from 'fp-ts/lib/Tuple';
+export const tuple = <T extends Array<any>>(...t: Tuple<T>): Tuple<T> => t;
+
 // Record
 const RecordExport = t.record;
 type RecordExport<K extends string | number | symbol, T> = Record<K, T>;
