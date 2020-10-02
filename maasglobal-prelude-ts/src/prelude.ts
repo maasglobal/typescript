@@ -4,10 +4,8 @@ import * as t from 'io-ts';
 
 // Control Flow
 
-export { pipe } from 'fp-ts/lib/pipeable';
-export { flow } from 'fp-ts/lib/function';
 export { Do as do } from 'fp-ts-contrib/lib/Do';
-export { identity } from 'fp-ts/lib/function';
+export { pipe, flow, identity } from 'fp-ts/lib/function';
 
 // IIFE
 
@@ -71,7 +69,7 @@ type ArrayExport<T> = Array<T>;
 export { ArrayExport as Array };
 export * as Array_ from 'fp-ts/lib/Array';
 export { array as Array__ } from 'fp-ts/lib/Array';
-export const array = <A>(...a: Array<A>) => a;
+export const array = <A>(...a: Array<A>): Array<A> => a;
 
 // Tuple
 const TupleCodec = t.tuple;

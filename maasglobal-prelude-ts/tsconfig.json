@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
