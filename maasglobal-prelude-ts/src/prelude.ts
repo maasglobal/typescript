@@ -164,6 +164,11 @@ export { Reader } from 'fp-ts/lib/Reader';
 export * as Reader_ from 'fp-ts/lib/Reader';
 export { reader as Reader__ } from 'fp-ts/lib/Reader';
 
+// ReaderEither
+export { ReaderEither } from 'fp-ts/lib/ReaderEither';
+export * as ReaderEither_ from 'fp-ts/lib/ReaderEither';
+export { readerEither as ReaderEither__ } from 'fp-ts/lib/ReaderEither';
+
 // ReaderTask
 export { ReaderTask } from 'fp-ts/lib/ReaderTask';
 export * as ReaderTask_ from 'fp-ts/lib/ReaderTask';
