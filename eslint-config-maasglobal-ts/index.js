@@ -4,7 +4,14 @@ module.exports = {
     project: './tsconfig.eslint.json',
     extraFileExtensions: ['.json'],
   },
-  plugins: ['@typescript-eslint', 'fp', 'json', 'prettier', 'import'],
+  plugins: [
+    '@typescript-eslint',
+    'fp',
+    'json',
+    'prettier',
+    'import',
+    'simple-import-sort',
+  ],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
@@ -47,7 +54,8 @@ module.exports = {
     'fp/no-mutating-methods': 0,
     'import/no-duplicates': 0,
     'import/no-unresolved': 0,
-    'import/order': 1,
+    'import/order': 0,
+    'simple-import-sort/sort': 1,
     'no-restricted-imports': [1, 'ruins-ts'],
     'prettier/prettier': [
       1,
