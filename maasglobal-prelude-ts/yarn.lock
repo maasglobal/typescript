@@ -1494,10 +1494,10 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-maasglobal-ts@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/eslint-config-maasglobal-ts/-/eslint-config-maasglobal-ts-0.0.7.tgz#a0f89456feb95523bcc6273a884e144c31cf4154"
-  integrity sha512-l4PbunBNtx632yt7tLe1IrOJ7/DJSkZBk7LmHjl3Rs57UGf/OdDUbrIAFe1sCjehuzoxheo+6Vre4MNUNk9i/Q==
+eslint-config-maasglobal-ts@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/eslint-config-maasglobal-ts/-/eslint-config-maasglobal-ts-0.0.8.tgz#34253a245287c9e73c6d5a643277d46b7a5ab477"
+  integrity sha512-sSslYeDyDCAYxqUMZx5Jyhcui9HnxCooWeo13D7TXtZmLh01teWJd0bC4UWuId+wpMh/j7V3i3YrOWckYw0/Kg==
 
 eslint-config-prettier@^6.12.0:
   version "6.12.0"
@@ -1565,6 +1565,11 @@ eslint-plugin-prettier@^3.1.2:
   integrity sha512-jZDa8z76klRqo+TdGDTFJSavwbnWK2ZpqGKNZ+VvweMW516pDUMmQ2koXvxEE4JhzNvTv+radye/bWGBmA6jmg==
   dependencies:
     prettier-linter-helpers "^1.0.0"
+
+eslint-plugin-simple-import-sort@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-5.0.3.tgz#9ae258ddada6efffc55e47a134afbd279eb31fc6"
+  integrity sha512-1rf3AWiHeWNCQdAq0iXNnlccnH1UDnelGgrPbjBBHE8d2hXVtOudcmy0vTF4hri3iJ0MKz8jBhmH6lJ0ZWZLHQ==
 
 eslint-scope@^5.0.0:
   version "5.1.1"

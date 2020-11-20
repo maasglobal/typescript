@@ -92,8 +92,8 @@ export { Int } from 'io-ts';
 export { IntFromString } from 'io-ts-types/lib/IntFromString';
 
 // NonEmptyArray
-import { nonEmptyArray as NonEmptyArrayCodec } from 'io-ts-types/lib/nonEmptyArray';
 import { NonEmptyArray as NonEmptyArrayType } from 'fp-ts/lib/NonEmptyArray';
+import { nonEmptyArray as NonEmptyArrayCodec } from 'io-ts-types/lib/nonEmptyArray';
 export const NonEmptyArray = NonEmptyArrayCodec;
 export type NonEmptyArray<A> = NonEmptyArrayType<A>;
 export * as NonEmptyArray_ from 'fp-ts/lib/NonEmptyArray';
