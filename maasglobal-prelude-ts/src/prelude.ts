@@ -187,6 +187,11 @@ export { Ord } from 'fp-ts/lib/Ord';
 export * as Ord_ from 'fp-ts/lib/Ord';
 export { ord as Ord__ } from 'fp-ts/lib/Ord';
 
+// Eq
+export { Eq } from 'fp-ts/lib/Eq';
+export * as Eq_ from 'fp-ts/lib/Eq';
+export { eq as Eq__ } from 'fp-ts/lib/Eq';
+
 // Apply
 export * as Apply_ from 'fp-ts/lib/Apply';
 
