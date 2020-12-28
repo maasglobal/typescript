@@ -52,6 +52,7 @@ module.exports = {
     'fp/no-unused-expression': 0,
     'fp/no-mutation': [1, { commonjs: true }],
     'fp/no-mutating-methods': 0,
+    'import/no-default-export': 1,
     'import/no-duplicates': 0,
     'import/no-unresolved': 0,
     'import/order': 0,
@@ -82,6 +83,13 @@ module.exports = {
       files: ['**/__stories__/**/*'],
       rules: {
         'no-restricted-imports': 0,
+        'import/no-default-export': 0,
+      },
+    },
+    {
+      files: ['types/**/*.d.ts'],
+      rules: {
+        'import/no-default-export': 0,
       },
     },
   ],
