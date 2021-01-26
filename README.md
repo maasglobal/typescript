@@ -15,7 +15,7 @@ The code is divided into several independent packages.
 * [fp-ts](https://gcanti.github.io/fp-ts/introduction/core-concepts.html)
 * [io-ts](https://github.com/gcanti/io-ts/blob/master/README.md#implemented-types--combinators)
 
-## Devops
+## DevOps
 
 The following commands should work in all packages where applicable.
 
