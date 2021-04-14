@@ -9,7 +9,7 @@ describe('prelude ', () => {
       const hello: P.IO<void> = () => log('hello');
       const greeter: P.IO<void> = P.pipe(
         [hello, hello], // Array<IO<void>>
-        P.Array__.sequence(P.IO__), // IO<Array<void>>
+        P.Array_.sequence(P.IO_.Applicative), // IO<Array<void>>
         P.IO_.map(P.void_.fromArray), // IO<void>
       );
       greeter(); // void
@@ -39,7 +39,7 @@ describe('prelude ', () => {
           foo: ['a', 'b'],
           bar: [1, 2],
         },
-        P.Apply_.sequenceS(P.Array__),
+        P.Apply_.sequenceS(P.Array_.Apply),
       );
       expect(sequenced).toEqual([
         {
