@@ -12,6 +12,11 @@ export type FE<R> = () => R;
 export type II = <R>(fe: FE<R>) => R;
 export const ii: II = (fe) => fe();
 
+// Branding
+export type Brand<B> = t.Brand<B>;
+export type Branded<T, B> = t.Branded<T, B>;
+export type Unbranded<T> = Omit<T, keyof Brand<unknown>>;
+
 // Nullable
 export type Nullable<T> = T | null;
 
