@@ -12,6 +12,13 @@ export type FE<R> = () => R;
 export type II = <R>(fe: FE<R>) => R;
 export const ii: II = (fe) => fe();
 
+// Nullable
+export type Nullable<T> = T | null;
+
+// NonNullable
+type NonNullableExport<T> = NonNullable<T>;
+export { NonNullableExport as NonNullable };
+
 // unknown
 const unknownExport = t.unknown;
 type unknownExport = unknown;
