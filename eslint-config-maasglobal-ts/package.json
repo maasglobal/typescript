@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-maasglobal-ts",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "This package contains reusable eslint configuration for MaaS Global TypeScript projects.",
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-deprecation": "^1.2.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-json": "^2.0.1",
@@ -39,6 +40,7 @@
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-deprecation": "^1.2.0",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-json": "^2.0.1",
