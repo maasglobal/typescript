@@ -4,7 +4,7 @@ import * as t from 'io-ts';
 
 // Control Flow
 
-export { pipe, flow, identity } from 'fp-ts/lib/function';
+export { pipe, flow, identity, absurd } from 'fp-ts/lib/function';
 
 // IIFE
 
@@ -38,6 +38,7 @@ export { nullExport as null };
 const stringExport = t.string;
 type stringExport = string;
 export { stringExport as string };
+export * as string_ from 'fp-ts/lib/string';
 
 // undefined
 const undefinedExport = t.undefined;
@@ -72,6 +73,7 @@ export { BooleanFromString as booleanFromString } from 'io-ts-types/lib/BooleanF
 const numberExport = t.number;
 type numberExport = number;
 export { numberExport as number };
+export * as number_ from 'fp-ts/lib/number';
 export { NumberFromString as numberFromString } from 'io-ts-types/lib/NumberFromString';
 
 // Array
@@ -81,6 +83,13 @@ export { ArrayExport as Array };
 export * as Array_ from 'fp-ts/lib/Array';
 export { array as Array__ } from 'fp-ts/lib/Array';
 export const array = <A>(...a: Array<A>): Array<A> => a;
+
+// Set
+type SetExport<T> = Set<T>;
+export { SetExport as Set };
+export * as Set_ from 'fp-ts/lib/Set';
+export const set = <A>(...a: Array<A>): Set<A> => new Set(a);
+export { setFromArray as SetFromArray } from 'io-ts-types/lib/setFromArray';
 
 // Tuple
 const TupleCodec = t.tuple;
@@ -148,6 +157,16 @@ export { left } from 'fp-ts/lib/Either';
 export { Right } from 'fp-ts/lib/Either';
 export { right } from 'fp-ts/lib/Either';
 
+// These
+import { These as TheseType } from 'fp-ts/lib/These';
+export type These<E, A> = TheseType<E, A>;
+export * as These_ from 'fp-ts/lib/These';
+export { these as These__ } from 'fp-ts/lib/These';
+
+// Both
+export { Both } from 'fp-ts/lib/These';
+export { both } from 'fp-ts/lib/These';
+
 // IO
 export { IO } from 'fp-ts/lib/IO';
 export * as IO_ from 'fp-ts/lib/IO';
@@ -164,11 +183,20 @@ export * as Task_ from 'fp-ts/lib/Task';
 export { task as Task__ } from 'fp-ts/lib/Task';
 export { taskSeq as TaskSeq__ } from 'fp-ts/lib/Task';
 
+// TaskOption
+export { TaskOption } from 'fp-ts/lib/TaskOption';
+export * as TaskOption_ from 'fp-ts/lib/TaskOption';
+
 // TaskEither
 export { TaskEither } from 'fp-ts/lib/TaskEither';
 export * as TaskEither_ from 'fp-ts/lib/TaskEither';
 export { taskEither as TaskEither__ } from 'fp-ts/lib/TaskEither';
 export { taskEitherSeq as TaskEitherSeq__ } from 'fp-ts/lib/TaskEither';
+
+// TaskThese
+export { TaskThese } from 'fp-ts/lib/TaskThese';
+export * as TaskThese_ from 'fp-ts/lib/TaskThese';
+export { taskThese as TaskThese__ } from 'fp-ts/lib/TaskThese';
 
 // Reader
 export { Reader } from 'fp-ts/lib/Reader';
@@ -208,3 +236,13 @@ export * as Apply_ from 'fp-ts/lib/Apply';
 
 // Foldable
 export * as Foldable_ from 'fp-ts/lib/Foldable';
+
+// Json
+export { Json } from 'fp-ts/lib/Json';
+export * as Json_ from 'fp-ts/lib/Json';
+
+// Console
+export * as Console_ from 'fp-ts/lib/Console';
+
+// Random
+export * as Random_ from 'fp-ts/lib/Random';
