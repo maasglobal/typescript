@@ -4,7 +4,7 @@ import * as t from 'io-ts';
 
 // Control Flow
 
-export { pipe, flow, identity, absurd } from 'fp-ts/lib/function';
+export { pipe, flow, identity, absurd, not } from 'fp-ts/lib/function';
 
 // IIFE
 
