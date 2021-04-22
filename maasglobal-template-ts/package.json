@@ -7,6 +7,12 @@
   "files": [
     "lib/**/*"
   ],
+  "peerDependencies": {
+    "maasglobal-prelude-ts": "^0.0.10",
+    "io-ts": "^2.2.16",
+    "io-ts-validator": "^0.0.6",
+    "ruins-ts": "^0.0.3"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.41",
