@@ -4,9 +4,11 @@ node_js:
 before_install:
   - yarn --cwd eslint-config-maasglobal-ts
   - yarn --cwd maasglobal-prelude-ts
+  - yarn --cwd maasglobal-template-ts
 script:
   - yarn --cwd eslint-config-maasglobal-ts ci
   - yarn --cwd maasglobal-prelude-ts ci
+  - yarn --cwd maasglobal-template-ts ci
 
 
 
