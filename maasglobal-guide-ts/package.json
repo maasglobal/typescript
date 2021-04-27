@@ -1,0 +1,53 @@
+{
+  "name": "maasglobal-guide-ts",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "peerDependencies": {
+    "maasglobal-prelude-ts": "^0.0.10",
+    "io-ts": "^2.2.16",
+    "io-ts-validator": "^0.0.6",
+    "ruins-ts": "^0.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "@typescript-eslint/typescript-estree": "^4.3.0",
+    "eslint": "^6.8.0",
+    "eslint-config-maasglobal-ts": "^0.0.10",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-deprecation": "^1.2.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-json": "^2.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "fp-ts": "^2.10.4",
+    "io-ts": "^2.2.16",
+    "io-ts-types": "^0.5.16",
+    "io-ts-validator": "^0.0.6",
+    "jest": "^26.6.3",
+    "maasglobal-prelude-ts": "^0.0.10",
+    "monocle-ts": "^2.3.9",
+    "newtype-ts": "^0.3.4",
+    "prettier": "^2.2.1",
+    "ruins-ts": "^0.0.3",
+    "ts-jest": "^26.5.5",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "readme-ts": "python3 .extract_code.py < README.md > src/readme.ts",
+    "test": "jest --no-cache",
+    "typecheck": "tsc -p src/tsconfig.json",
+    "eslint": "eslint --max-warnings=0 '**/*.{ts,js,json}'",
+    "prettify": "yarn eslint --fix||true",
+    "lint": "yarn eslint",
+    "ci": "yarn readme-ts && yarn typecheck && yarn test && yarn lint"
+  }
+}
