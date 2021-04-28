@@ -4,7 +4,7 @@ TypeScript has a relatively good [type system](https://typescriptlang.org/docs/)
 
 This guide attemps to explaing basics of working with a code base written in this manner. The guide covers basics of [type variables](https://www.typescriptlang.org/docs/handbook/generics.html#working-with-generic-type-variables), [io-ts](https://github.com/gcanti/io-ts/blob/master/README.md#implemented-types--combinators) and [fp-ts](https://gcanti.github.io/fp-ts/introduction/core-concepts.html) data structures.
 
-#### Type Variables
+## Type Variables
 
 TypeScript throws away the types of your function inputs by default.
 You can preserve the types by annotating your function with type variables.
@@ -25,7 +25,7 @@ type PairCreator = <A,B>(a: A, b: B) => [A, B];
 const createPair2: PairCreator = (first, second) => [first, second];
 ```
 
-#### Pipeline
+## Pipeline
 
 The code base makes heavy use of pipelines. Pipelines are the Javascript equivalent for UNIX pipes (the `ls|grep omg` sort of thing). The [pipeline operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Pipeline_operator) `|>` is an upcoming starndard. TypeScript is currently [waiting](https://github.com/microsoft/TypeScript/issues/17718) for TC39 standardization. However, fp-ts provides a similar `pipe` function that works today. It works as follows.
 
@@ -58,7 +58,7 @@ pipe(
 );
 ```
 
-#### Decoding JSON
+## Decoding JSON
 
 Another situation where the type information is lost is when we convert
 our data structures to JSON. Or the data might not have types to begin
@@ -90,7 +90,7 @@ const json: unknown = JSON.parse('{"userId":123,"name":"Bob"}');
 const user: User = validator(User).decodeSync(json);
 ```
 
-#### Types
+## Types
 
 We have collected some of the most basic utilities from typescript,
 fp-ts and io-ts  into maasglobal-prelude-ts package to make their
@@ -112,7 +112,7 @@ const shoes = P.ii(() => {
 })
 ```
 
-##### function
+### function
 
 * [function](https://gcanti.github.io/fp-ts/modules/function.ts.html)
 
@@ -143,7 +143,7 @@ function yesOrNo(input: boolean): 'yes'|'no' {
 }
 ```
 
-##### boolean
+### boolean
 
 * [boolean](https://gcanti.github.io/fp-ts/modules/boolean.ts.html)
 
@@ -152,7 +152,7 @@ const bool: boolean = true
 const boolConstant: true = true
 ```
 
-##### string
+### string
 
 * [string](https://gcanti.github.io/fp-ts/modules/number.ts.html)
 
@@ -161,7 +161,7 @@ const string: string = 'foo'
 const strConstant: 'foo' = 'foo'
 ```
 
-##### number
+### number
 
 * [number](https://gcanti.github.io/fp-ts/modules/number.ts.html)
 
@@ -170,7 +170,7 @@ const number: number = 123
 const numConstant: 123 = 123
 ```
 
-##### Array
+### Array
 
 * [Array](https://gcanti.github.io/fp-ts/modules/Array.ts.html)
 * [NonEmptyArray](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html) array with at least one item
@@ -179,7 +179,7 @@ const numConstant: 123 = 123
 const array: Array<string|number> = ['foo', 123, 'bar', 456]
 ```
 
-##### Tuple
+### Tuple
 
 * [Tuple](https://gcanti.github.io/fp-ts/modules/Tuple.ts.html)
 * [Apply_.sequenceT](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequencet)
@@ -188,7 +188,7 @@ const array: Array<string|number> = ['foo', 123, 'bar', 456]
 const pair: [string, number] = ['foo', 123]
 ```
 
-##### Record
+### Record
 
 * [Record](https://gcanti.github.io/fp-ts/modules/Record.ts.html) key/value mapping
 
@@ -199,7 +199,7 @@ const record: Record<string, string|number> = {
 }
 ```
 
-##### Struct
+### Struct
 
 * [Apply_.sequenceS](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequences)
 
@@ -210,7 +210,7 @@ const struct: { foo: string, bar: number } = {
 }
 ```
 
-##### Option
+### Option
 
 * [Option](https://gcanti.github.io/fp-ts/modules/Option.ts.html) value or "null"
 
@@ -230,7 +230,7 @@ const noOptionalValue: P.Option<number> = {
 const noOptionalValue2: P.Option<number> = P.Option_.none
 ```
 
-##### Either
+### Either
 
 * [Either](https://gcanti.github.io/fp-ts/modules/Either.ts.html) value or error
 
@@ -279,18 +279,18 @@ const divide2: Divide = (divider) => (input) => P.pipe(
 );
 ```
 
-##### These
+### These
 
 * [These](https://gcanti.github.io/fp-ts/modules/These.ts.html) extends either with `both` that can be used for warnings.
 
-##### Lazy
+### Lazy
 
 Lazy is used for wrapping pure but heavy computations in a "thunk" `() => factorize(someBigNumber)`.
 It lets the caller discard the result without evaluating the computationaly heavy part.
 
 * [Lazy](https://gcanti.github.io/fp-ts/modules/function.ts.html#lazy-interface)
 
-##### IO
+### IO
 
 IO wraps synchronous effects in a "thunk" `() => { ... your code goes here }`.
 It lets the caller discard the result without executing the computation.
@@ -343,7 +343,7 @@ const d6Divider2: D6Divider = (input) => P.pipe(
 )
 ```
 
-##### Task
+### Task
 
 Task wraps asynchronous effects in a "thunk" `async () => { ... your code goes here }`.
 It is a way of letting the caller discard the result without executing the computation.
@@ -362,7 +362,7 @@ const asyncPrinter: AsyncPrinter = (x) => async () => console.log(x)
 const asyncPrinter2: AsyncPrinter = P.Task_.fromIOK(P.Console_.log)
 ```
 
-##### Reader
+### Reader
 
 Reader is used for injecting dependencies before executing the computation
 
@@ -392,7 +392,7 @@ const withoutDeps2: WithoutDeps = (input) => ({ print }) => P.pipe(
 )
 ```
 
-#### Functional Programming
+## Functional Programming
 
 The example code in the _Decoding JSON_ chapter above contained some
 side-effects and introduced a `null` into the type signature. These are
@@ -435,7 +435,7 @@ const main = pipe(
 main();
 ```
 
-#### Debugging Functional Code
+## Debugging Functional Code
 
 The code example in previous chapter doesn't have many type signatures. This is not a problem since TypeScript is often able to infer the types for your code as long as you are using typesafe building blocks. Indeed, that is one of the reasons what makes functional programming a good match for strongly typed code.
 
