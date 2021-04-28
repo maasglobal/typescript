@@ -25,15 +25,23 @@ type PairCreator = <A,B>(a: A, b: B) => [A, B];
 const createPair2: PairCreator = (first, second) => [first, second];
 ```
 
+Note that types `A` and `B` in the example above only support operations
+that can be performed regardless of the more detailed types of the
+inputs `a` and `b`. You may need to extend the signature if you wish to
+perform operations. For example if you wish to perform numeric
+multiplication or summation on `A` you would need to state `A extends number`.
+
+```typescript
+const double = <A extends number>(a: A) => a * 2;
+const increment = <A extends number>(a: A) => a + 1;
+```
+
 ## Pipeline
 
 The code base makes heavy use of pipelines. Pipelines are the Javascript equivalent for UNIX pipes (the `ls|grep omg` sort of thing). The [pipeline operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Pipeline_operator) `|>` is an upcoming starndard. TypeScript is currently [waiting](https://github.com/microsoft/TypeScript/issues/17718) for TC39 standardization. However, fp-ts provides a similar `pipe` function that works today. It works as follows.
 
 ```typescript
 import { pipe } from 'fp-ts/lib/function'
-
-const double = <X extends number>(x: number) => x * 2;
-const increment = <X extends number>(x: number) => x + 1;
 
 pipe(
   5,
