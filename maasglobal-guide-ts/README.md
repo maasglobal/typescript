@@ -318,8 +318,7 @@ const printSum2: SumPrinter = (y) => (x) => P.Console_.log(x + y)
 type Dice = (sides: number) => P.IO<number>
 const dice: Dice = (sides) => () => 1 + Math.floor(Math.random() * sides)
 // or
-import * as Random_  from 'fp-ts/lib/Random'
-const dice2: Dice = (sides) => Random_.randomInt(1, sides)
+const dice2: Dice = (sides) => P.Random_.randomInt(1, sides)
 
 type D6 = P.IO<number>
 const d6: D6 = dice(6)
