@@ -9,6 +9,7 @@ The code is divided into several independent packages.
 * [eslint-config-maasglobal-ts](eslint-config-maasglobal-ts) contains shared eslint configuration
 * [maasglobal-guide-ts](maasglobal-guide-ts) contains short programing guide
 * [maasglobal-prelude-ts](maasglobal-prelude-ts) contains essential imports to be shared between projects
+* [maasglobal-template-ts](maasglobal-template-ts) contains an example npm package with all the necessary boilerplate
 
 ## Related Packages
 
