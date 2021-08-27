@@ -4,7 +4,7 @@ import * as t from 'io-ts';
 
 // Control Flow
 
-export { pipe, flow, identity, absurd, not } from 'fp-ts/lib/function';
+export { pipe, flow, identity, absurd } from 'fp-ts/lib/function';
 
 // IIFE
 
@@ -60,7 +60,8 @@ export * as function_ from 'fp-ts/lib/function';
 export { Lazy } from 'fp-ts/lib/function';
 
 // Predicate
-export { Predicate } from 'fp-ts/lib/function';
+export { Predicate } from 'fp-ts/lib/Predicate';
+export * as Predicate_ from 'fp-ts/lib/Predicate';
 
 // boolean
 const booleanExport = t.boolean;
@@ -103,6 +104,10 @@ const RecordExport = t.record;
 type RecordExport<K extends string | number | symbol, T> = Record<K, T>;
 export { RecordExport as Record };
 export * as Record_ from 'fp-ts/lib/Record';
+
+// struct
+export const struct = t.type;
+export * as struct_ from 'fp-ts/lib/struct';
 
 // Int
 export { Int } from 'io-ts';
@@ -201,6 +206,7 @@ export * as ReaderTaskEither_ from 'fp-ts/lib/ReaderTaskEither';
 
 // Magma
 export { Magma } from 'fp-ts/lib/Magma';
+export * as Magma_ from 'fp-ts/lib/Magma';
 
 // Ord
 export { Ord } from 'fp-ts/lib/Ord';
