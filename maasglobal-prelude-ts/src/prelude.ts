@@ -208,6 +208,10 @@ export * as ReaderTaskEither_ from 'fp-ts/lib/ReaderTaskEither';
 export { Magma } from 'fp-ts/lib/Magma';
 export * as Magma_ from 'fp-ts/lib/Magma';
 
+// Refinement
+export { Refinement } from 'fp-ts/lib/Refinement';
+export * as Refinement_ from 'fp-ts/lib/Refinement';
+
 // Ord
 export { Ord } from 'fp-ts/lib/Ord';
 export * as Ord_ from 'fp-ts/lib/Ord';
