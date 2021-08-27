@@ -131,7 +131,7 @@ const two = P.flow(
   P.function_.increment,
   P.function_.increment,
 )(zero)
-const three = [1,2,3,4,5,6].find(P.not((x) => x <3))
+const three = [1,2,3,4,5,6].find(P.Predicate_.not((x) => x <3))
 const four = P.pipe(
   zero,
   P.function_.increment,
