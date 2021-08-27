@@ -44,6 +44,7 @@
   },
   "scripts": {
     "eslint": "eslint --max-warnings=0 . -c index.js",
+    "prettify": "yarn eslint --fix || true",
     "lint": "yarn eslint",
     "ci": "yarn lint",
     "deploy-npm": "yarn ci && yarn publish --non-interactive",

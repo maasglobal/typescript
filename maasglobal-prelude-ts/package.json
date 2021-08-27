@@ -57,6 +57,7 @@
     "build": "yarn clean && tsc",
     "typecheck": "tsc -p src/tsconfig.json",
     "eslint": "eslint --max-warnings=0 '**/*.{ts,js,json}'",
+    "prettify": "yarn eslint --fix || true",
     "lint": "yarn eslint",
     "ci": "yarn lint && yarn typecheck && yarn test && yarn build",
     "deploy-npm": "yarn ci && yarn publish --non-interactive",
