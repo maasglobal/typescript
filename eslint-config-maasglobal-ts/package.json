@@ -16,13 +16,6 @@
   "homepage": "https://github.com/maasglobal/typescript/tree/master/eslint-config-maasglobal-ts",
   "license": "MIT",
   "main": "index.js",
-  "scripts": {
-    "eslint": "eslint --max-warnings=0 . -c index.js",
-    "lint": "yarn eslint",
-    "ci": "yarn lint",
-    "deploy-npm": "yarn ci && yarn publish --non-interactive",
-    "deploy-alpha": "yarn ci && yarn publish --non-interactive --tag alpha"
-  },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
@@ -48,5 +41,12 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "prettier": "^2.1.2",
     "typescript": "^4.1.2"
+  },
+  "scripts": {
+    "eslint": "eslint --max-warnings=0 . -c index.js",
+    "lint": "yarn eslint",
+    "ci": "yarn lint",
+    "deploy-npm": "yarn ci && yarn publish --non-interactive",
+    "deploy-alpha": "yarn ci && yarn publish --non-interactive --tag alpha"
   }
 }
