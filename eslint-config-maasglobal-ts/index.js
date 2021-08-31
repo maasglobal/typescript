@@ -57,6 +57,7 @@ module.exports = {
     'import/no-duplicates': 0,
     'import/no-unresolved': 0,
     'import/order': 0,
+    'import/named': 0,
     'simple-import-sort/sort': 1,
     'deprecation/deprecation': 1,
     'no-restricted-imports': [1, 'ruins-ts'],
