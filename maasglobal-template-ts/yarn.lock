@@ -3184,10 +3184,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-maasglobal-prelude-ts@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/maasglobal-prelude-ts/-/maasglobal-prelude-ts-0.0.11.tgz#9f4681ad93c2b883465603501e6b0db1b4920aaf"
-  integrity sha512-cFfCGaBhrBhhBVxprOu18/v0mSwSvpSaoOT0wDlao74Pfd30gKHnkbTa5m7NfbFV/GsXsbhkwJ2razPNPlpNQg==
+maasglobal-prelude-ts@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/maasglobal-prelude-ts/-/maasglobal-prelude-ts-0.0.13.tgz#c720a1d4c45c91764b80564987f24b60654fc3e9"
+  integrity sha512-aFnCiyP0Q5my3Wwp0+T/e9fPGJgilvamfR8KdetP5XXB3Mjq4nyj1lbBx+4NcKTdUtk8FOxhfih83Rb3gOztzQ==
 
 make-dir@^3.0.0:
   version "3.1.0"
