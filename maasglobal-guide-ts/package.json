@@ -8,7 +8,7 @@
     "lib/**/*"
   ],
   "peerDependencies": {
-    "maasglobal-prelude-ts": "^0.0.11",
+    "maasglobal-prelude-ts": "^0.0.12",
     "io-ts": "^2.2.16",
     "io-ts-validator": "^0.0.6",
     "ruins-ts": "^0.0.3"
@@ -33,7 +33,7 @@
     "io-ts-types": "^0.5.16",
     "io-ts-validator": "^0.0.6",
     "jest": "^26.6.3",
-    "maasglobal-prelude-ts": "^0.0.11",
+    "maasglobal-prelude-ts": "^0.0.12",
     "monocle-ts": "^2.3.9",
     "newtype-ts": "^0.3.4",
     "prettier": "^2.2.1",
