@@ -52,19 +52,20 @@ pipe(
 ); // 42
 ```
 
-When debugging runtime errors it may be desirable to add debug prints into a pipe using console.log. The type language does not contain print statement. However, type assertions can be used for the same effect when debugging the type language code.
+When debugging runtime errors it may be desirable to add debug prints into a pipe using console.log. The type language does not contain print statement. However, identity functions with type signatures can be used to check the types where console.log lines are used to check runtime values.
 
 ```typescript
 pipe(
   5,
   double,
-  (x) => { console.log(x); return x; },  // debug print
+  (x) => { console.log(x); return x; },  // check value
   double,
-  (x: number) => x,  // type assertion
+  (x: number) => x,  // check type
   increment,
   double,
 );
 ```
+
 
 ## Decoding JSON
 
@@ -98,27 +99,122 @@ const json: unknown = JSON.parse('{"userId":123,"name":"Bob"}');
 const user: User = validator(User).decodeSync(json);
 ```
 
-## Types
+
+## Type Friendly Tooling
+
+When working with types cstandard JavaScript tools are often too generic. TypeScript supports modifying the types with explicit [type assertions](https://www.typescriptlang.org/docs/handbook/basic-types.html#type-assertions). However, using proper tooling may reduce the need to use explicit type casts.
 
 We have collected some of the most basic utilities from typescript,
 fp-ts and io-ts  into maasglobal-prelude-ts package to make their
-use more convenient. The package also contains an 
-[IIFE](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression)
-helper. It is particularly helpful when assigning constants based
-on a condition.
+use more convenient.
 
+lets import the tools under name `P` for easy access
 ```typescript
 import * as P from 'maasglobal-prelude-ts'
+```
 
+Below are some examples cases where we can use the utilities to our benefit.
+
+### Adding an Element to a Record
+
+```typescript
+const input1: Record<string, string> = {
+  foo: 'foo',
+}
+
+const output1a: Record<string, number> = {
+  ...input1,  // string becomes number :(
+  omg: 123
+}
+
+const output1b: Record<string, number> = P.pipe(
+    // @ts-expect-error   error detected :)
+    input1,
+    P.Record_.upsertAt('omg', 123)
+)
+```
+
+### Concatenating Arrays of Different Type
+
+```typescript
+const input3: Array<number> = [1,2,3]
+
+const output3a = (input3 as Array<string|number>).concat(['foo'])  // cast required :(
+
+const output3b = P.pipe(
+  input3,  // no cast required :)
+  P.Array_.concatW(['foo']),
+)
+
+const output3c = P.pipe(
+  // @ts-expect-error   error if we want :)
+  input3,
+  P.Array_.concat(['foo']),
+)
+```
+
+### Concatenating Non-Empty Arrays of Same Type
+
+```typescript
+const input2 = ['foo']
+
+const [output2a] = input2.concat(['bar'])
+// @ts-expect-error   // can be undefined :(
+const test2a: string = output2a
+
+const [output2b] = P.pipe(
+  input2,
+  P.NonEmptyArray_.concat(['bar']),
+)
+const test2b: string = output2b  // always defined :)
+```
+
+### Get String Prefix Before Certain Character
+
+```typescript
+const input4 = 'hello-world'
+
+const [output4a] = input4.split('-')
+// @ts-expect-error can be undefined :(
+const test4a: string = output4a
+
+const [output4b] = P.pipe(
+  input4,
+  P.string_.split('-'),
+)
+const test4b: string = output4b  //  always defined :)
+
+const [output4c] = P.string_.split('-')(input4)  // without pipe
+const test4c: string = output4c
+```
+
+### Conditional Assigment of a Constant
+
+This uses our custom
+[IIFE](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression)
+helper.
+
+```typescript
 const raining = true
 
-const shoes = P.ii(() => {
+// forced to use ternary :(
+const output5a = raining ? 'rubber boots' : 'regular shoes';
+
+// regular if statement works :)
+const output5c = P.ii(() => {
   if (raining) {
     return 'rubber boots'
   }
   return 'regular shoes';
 })
 ```
+
+## Types
+
+Previous chapter showcased some of the utilities included in our prelude.
+This chapter contains a more exhaustive list of types of values that
+the included utilities work on.
+
 
 ### function
 
