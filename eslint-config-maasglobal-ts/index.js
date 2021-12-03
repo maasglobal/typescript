@@ -54,7 +54,6 @@ module.exports = {
     'fp/no-mutation': [1, { commonjs: true }],
     'fp/no-mutating-methods': 0,
     'import/no-default-export': 1,
-    'import/no-duplicates': 0,
     'import/no-unresolved': 0,
     'import/order': 0,
     'import/named': 0,
