@@ -1,5 +1,8 @@
 {
   "include": [
-    "index.js"
+    "index.js",
+    "light.js",
+    "prettierrc.js",
+    "strict.js"
   ]
 }
