@@ -42,7 +42,9 @@
   },
   "scripts": {
     "eslint": "eslint --max-warnings=0 . -c strict.js",
-    "prettify": "yarn eslint --fix || true",
+    "eslint-fix": "yarn eslint --fix || true",
+    "prettier": "prettier --write --ignore-path .gitignore --config prettierrc.js '**/*.{css,html,js,ts,json,md,yaml,yml}'",
+    "prettify": "yarn eslint-fix && yarn prettier",
     "lint": "yarn eslint",
     "ci": "yarn lint",
     "deploy-npm": "yarn ci && yarn publish --non-interactive",

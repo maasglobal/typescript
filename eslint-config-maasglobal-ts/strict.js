@@ -1,11 +1,6 @@
 module.exports = {
-  plugins: [
-    'fp',
-  ],
-  extends: [
-    './index.js',
-    'plugin:fp/recommended',
-  ],
+  plugins: ['fp'],
+  extends: ['./index.js', 'plugin:fp/recommended'],
   rules: {
     'fp/no-nil': 0,
     'fp/no-rest-parameters': 0,
