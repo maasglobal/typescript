@@ -1,5 +1,6 @@
 // TypeScript Prelude
 
+import { flow } from 'fp-ts/lib/function';
 import * as t from 'io-ts';
 
 // Control Flow
@@ -84,12 +85,26 @@ export { ArrayExport as Array };
 export * as Array_ from 'fp-ts/lib/Array';
 export const array = <A>(...a: Array<A>): Array<A> => a;
 
+// ReadonlyArray
+const ReadonlyArrayExport = t.readonlyArray;
+type ReadonlyArrayExport<T> = ReadonlyArray<T>;
+export { ReadonlyArrayExport as ReadonlyArray };
+export * as ReadonlyArray_ from 'fp-ts/lib/ReadonlyArray';
+export const readonlyArray = <A>(...a: ReadonlyArray<A>): ReadonlyArray<A> => a;
+
 // Set
 type SetExport<T> = Set<T>;
 export { SetExport as Set };
 export * as Set_ from 'fp-ts/lib/Set';
 export const set = <A>(...a: Array<A>): Set<A> => new Set(a);
 export { setFromArray as SetFromArray } from 'io-ts-types/lib/setFromArray';
+
+// ReadonlySet
+type ReadonlySetExport<T> = ReadonlySet<T>;
+export { ReadonlySetExport as ReadonlySet };
+export * as ReadonlySet_ from 'fp-ts/lib/ReadonlySet';
+export const readonlySet = <A>(...a: Array<A>): ReadonlySet<A> => new Set(a);
+export { readonlySetFromArray as ReadonlySetFromArray } from 'io-ts-types/lib/readonlySetFromArray';
 
 // Tuple
 const TupleCodec = t.tuple;
@@ -99,11 +114,28 @@ export type Tuple<T extends Array<any>> = TupleType<T>;
 export * as Tuple_ from 'fp-ts/lib/Tuple';
 export const tuple = <T extends Array<any>>(...t: Tuple<T>): Tuple<T> => t;
 
+// ReadonlyTuple
+const ReadonlyTupleCodec = flow(t.tuple, t.readonly);
+type ReadonlyTupleType<T extends Array<any>> = T;
+export const ReadonlyTuple = ReadonlyTupleCodec;
+export type ReadonlyTuple<T extends Array<any>> = ReadonlyTupleType<T>;
+export * as ReadonlyTuple_ from 'fp-ts/lib/ReadonlyTuple';
+export const readonlyTuple = <T extends Array<any>>(
+  ...t: ReadonlyTuple<T>
+): ReadonlyTuple<T> => t;
+
 // Record
 const RecordExport = t.record;
 type RecordExport<K extends string | number | symbol, T> = Record<K, T>;
 export { RecordExport as Record };
 export * as Record_ from 'fp-ts/lib/Record';
+
+// ReadonlyRecord
+import { ReadonlyRecord as ReadonlyRecordType } from 'fp-ts/lib/ReadonlyRecord';
+const ReadonlyRecordExport = flow(t.record, t.readonly);
+type ReadonlyRecordExport<K extends string, T> = ReadonlyRecordType<K, T>;
+export { ReadonlyRecordExport as ReadonlyRecord };
+export * as ReadonlyRecord_ from 'fp-ts/lib/ReadonlyRecord';
 
 // struct
 export const struct = t.type;
@@ -119,6 +151,13 @@ import { nonEmptyArray as NonEmptyArrayCodec } from 'io-ts-types/lib/nonEmptyArr
 export const NonEmptyArray = NonEmptyArrayCodec;
 export type NonEmptyArray<A> = NonEmptyArrayType<A>;
 export * as NonEmptyArray_ from 'fp-ts/lib/NonEmptyArray';
+
+// ReadonlyNonEmptyArray
+import { ReadonlyNonEmptyArray as ReadonlyNonEmptyArrayType } from 'fp-ts/lib/ReadonlyNonEmptyArray';
+import { readonlyNonEmptyArray as ReadonlyNonEmptyArrayCodec } from 'io-ts-types/lib/readonlyNonEmptyArray';
+export const ReadonlyNonEmptyArray = ReadonlyNonEmptyArrayCodec;
+export type ReadonlyNonEmptyArray<A> = ReadonlyNonEmptyArrayType<A>;
+export * as ReadonlyNonEmptyArray_ from 'fp-ts/lib/ReadonlyNonEmptyArray';
 
 // Identity
 export { Identity } from 'fp-ts/lib/Identity';
