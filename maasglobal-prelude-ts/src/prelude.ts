@@ -137,6 +137,18 @@ type ReadonlyRecordExport<K extends string, T> = ReadonlyRecordType<K, T>;
 export { ReadonlyRecordExport as ReadonlyRecord };
 export * as ReadonlyRecord_ from 'fp-ts/lib/ReadonlyRecord';
 
+// Map
+const MapExport = t.record;
+type MapExport<K extends string | number | symbol, T> = Map<K, T>;
+export { MapExport as Map };
+export * as Map_ from 'fp-ts/lib/Map';
+
+// ReadonlyMap
+const ReadonlyMapExport = flow(t.record, t.readonly);
+type ReadonlyMapExport<K, V> = ReadonlyMap<K, V>;
+export { ReadonlyMapExport as ReadonlyMap };
+export * as ReadonlyMap_ from 'fp-ts/lib/ReadonlyMap';
+
 // struct
 export const struct = t.type;
 export * as struct_ from 'fp-ts/lib/struct';
