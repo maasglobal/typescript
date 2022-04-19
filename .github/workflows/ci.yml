@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    name: CI
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install Dependencies
+        run: |
+          yarn --cwd eslint-config-maasglobal-ts
+          yarn --cwd maasglobal-prelude-ts
+          yarn --cwd maasglobal-template-ts
+          yarn --cwd maasglobal-guide-ts
+      - name: Run Tests
+        run: |
+          yarn --cwd eslint-config-maasglobal-ts ci
+          yarn --cwd maasglobal-prelude-ts ci
+          yarn --cwd maasglobal-template-ts ci
+          yarn --cwd maasglobal-guide-ts ci
