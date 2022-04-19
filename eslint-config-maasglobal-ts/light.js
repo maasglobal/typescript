@@ -1,15 +1,9 @@
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const prettierrc = require('./prettierrc.js');
 
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: [
-    '@typescript-eslint',
-    'import',
-    'simple-import-sort',
-    'prettier',
-  ],
+  plugins: ['@typescript-eslint', 'import', 'simple-import-sort', 'prettier'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
@@ -47,10 +41,7 @@ module.exports = {
     'import/order': 0,
     'import/named': 0,
     'simple-import-sort/sort': 1,
-    'prettier/prettier': [
-      0,
-      prettierrc,
-    ],
+    'prettier/prettier': [0, prettierrc],
   },
   overrides: [
     {

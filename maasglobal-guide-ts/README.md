@@ -8,8 +8,9 @@ This guide attemps to explaing basics of working with a code base written in thi
 
 TypeScript throws away the types of your function inputs by default.
 You can preserve the types by annotating your function with type variables.
+
 ```typescript
-function createPair<A,B>(first: A, second: B): [A, B] {
+function createPair<A, B>(first: A, second: B): [A, B] {
   return [first, second];
 }
 ```
@@ -21,7 +22,7 @@ and `b` are meaningless in the example below but are still required in
 the code.
 
 ```typescript
-type PairCreator = <A,B>(a: A, b: B) => [A, B];
+type PairCreator = <A, B>(a: A, b: B) => [A, B];
 const createPair2: PairCreator = (first, second) => [first, second];
 ```
 
@@ -41,15 +42,9 @@ const increment = <A extends number>(a: A) => a + 1;
 The code base makes heavy use of pipelines. Pipelines are the Javascript equivalent for UNIX pipes (the `ls|grep omg` sort of thing). The [pipeline operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Pipeline_operator) `|>` is an upcoming starndard. TypeScript is currently [waiting](https://github.com/microsoft/TypeScript/issues/17718) for TC39 standardization. However, fp-ts provides a similar `pipe` function that works today. It works as follows.
 
 ```typescript
-import { pipe } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/function';
 
-pipe(
-  5,
-  double,
-  double,
-  increment,
-  double,
-); // 42
+pipe(5, double, double, increment, double); // 42
 ```
 
 When debugging runtime errors it may be desirable to add debug prints into a pipe using console.log. The type language does not contain print statement. However, identity functions with type signatures can be used to check the types where console.log lines are used to check runtime values.
@@ -58,14 +53,16 @@ When debugging runtime errors it may be desirable to add debug prints into a pip
 pipe(
   5,
   double,
-  (x) => { console.log(x); return x; },  // check value
+  (x) => {
+    console.log(x);
+    return x;
+  }, // check value
   double,
-  (x: number) => x,  // check type
+  (x: number) => x, // check type
   increment,
   double,
 );
 ```
-
 
 ## Decoding JSON
 
@@ -80,13 +77,13 @@ type `type User = ` and runtime validator `const User = `. The static
 type is equivalent to `{ userId: number, name: string }`.
 
 ```typescript
-import * as t from 'io-ts'
+import * as t from 'io-ts';
 
 const User = t.type({
   userId: t.number,
-  name: t.string
-})
-type User = t.TypeOf<typeof User>
+  name: t.string,
+});
+type User = t.TypeOf<typeof User>;
 ```
 
 In the example below we pass a json structure to the runtime validator.
@@ -99,18 +96,18 @@ const json: unknown = JSON.parse('{"userId":123,"name":"Bob"}');
 const user: User = validator(User).decodeSync(json);
 ```
 
-
 ## Type Friendly Tooling
 
 When working with types cstandard JavaScript tools are often too generic. TypeScript supports modifying the types with explicit [type assertions](https://www.typescriptlang.org/docs/handbook/basic-types.html#type-assertions). However, using proper tooling may reduce the need to use explicit type casts.
 
 We have collected some of the most basic utilities from typescript,
-fp-ts and io-ts  into maasglobal-prelude-ts package to make their
+fp-ts and io-ts into maasglobal-prelude-ts package to make their
 use more convenient.
 
 lets import the tools under name `P` for easy access
+
 ```typescript
-import * as P from 'maasglobal-prelude-ts'
+import * as P from 'maasglobal-prelude-ts';
 ```
 
 Below are some examples cases where we can use the utilities to our benefit.
@@ -120,72 +117,66 @@ Below are some examples cases where we can use the utilities to our benefit.
 ```typescript
 const input1: Record<string, string> = {
   foo: 'foo',
-}
+};
 
 const output1a: Record<string, number> = {
-  ...input1,  // string becomes number :(
-  omg: 123
-}
+  ...input1, // string becomes number :(
+  omg: 123,
+};
 
 const output1b: Record<string, number> = P.pipe(
-    // @ts-expect-error   error detected :)
-    input1,
-    P.Record_.upsertAt('omg', 123)
-)
+  // @ts-expect-error   error detected :)
+  input1,
+  P.Record_.upsertAt('omg', 123),
+);
 ```
 
 ### Concatenating Arrays of Different Type
 
 ```typescript
-const input3: Array<number> = [1,2,3]
+const input3: Array<number> = [1, 2, 3];
 
-const output3a = (input3 as Array<string|number>).concat(['foo'])  // cast required :(
+const output3a = (input3 as Array<string | number>).concat(['foo']); // cast required :(
 
 const output3b = P.pipe(
-  input3,  // no cast required :)
+  input3, // no cast required :)
   P.Array_.concatW(['foo']),
-)
+);
 
 const output3c = P.pipe(
   // @ts-expect-error   error if we want :)
   input3,
   P.Array_.concat(['foo']),
-)
+);
 ```
 
 ### Concatenating Non-Empty Arrays of Same Type
 
 ```typescript
-const input2 = ['foo']
+const input2 = ['foo'];
 
-const [output2a] = input2.concat(['bar'])
+const [output2a] = input2.concat(['bar']);
 // @ts-expect-error   // can be undefined :(
-const test2a: string = output2a
+const test2a: string = output2a;
 
-const [output2b] = P.pipe(
-  input2,
-  P.NonEmptyArray_.concat(['bar']),
-)
-const test2b: string = output2b  // always defined :)
+const [output2b] = P.pipe(input2, P.NonEmptyArray_.concat(['bar']));
+const test2b: string = output2b; // always defined :)
 ```
 
 ### Get String Prefix Before Certain Character
 
 ```typescript
-const input4 = 'hello-world'
+const input4 = 'hello-world';
 
-const [output4a] = input4.split('-')
+const [output4a] = input4.split('-');
 // @ts-expect-error can be undefined :(
-const test4a: string = output4a
+const test4a: string = output4a;
 
-const [output4b] = P.pipe(
-  input4,
-  P.string_.split('-'),
-)
-const test4b: string = output4b  //  always defined :)
+const [output4b] = P.pipe(input4, P.string_.split('-'));
+const test4b: string = output4b; //  always defined :)
 
-const [output4c] = P.string_.split('-')(input4)  // without pipe
-const test4c: string = output4c
+const [output4c] = P.string_.split('-')(input4); // without pipe
+const test4c: string = output4c;
 ```
 
 ### Conditional Assigment of a Constant
@@ -195,7 +186,7 @@ This uses our custom
 helper.
 
 ```typescript
-const raining = true
+const raining = true;
 
 // forced to use ternary :(
 const output5a = raining ? 'rubber boots' : 'regular shoes';
@@ -203,10 +194,10 @@ const output5a = raining ? 'rubber boots' : 'regular shoes';
 // regular if statement works :)
 const output5c = P.ii(() => {
   if (raining) {
-    return 'rubber boots'
+    return 'rubber boots';
   }
   return 'regular shoes';
-})
+});
 ```
 
 ## Types
@@ -215,149 +206,143 @@ Previous chapter showcased some of the utilities included in our prelude.
 This chapter contains a more exhaustive list of types of values that
 the included utilities work on.
 
-
 ### function
 
-* [function](https://gcanti.github.io/fp-ts/modules/function.ts.html)
+- [function](https://gcanti.github.io/fp-ts/modules/function.ts.html)
 
 ```typescript
-const zero = P.identity(0)
-const one = P.function_.increment(zero)
-const two = P.flow(
-  P.function_.increment,
-  P.function_.increment,
-)(zero)
-const three = [1,2,3,4,5,6].find(P.Predicate_.not((x) => x <3))
+const zero = P.identity(0);
+const one = P.function_.increment(zero);
+const two = P.flow(P.function_.increment, P.function_.increment)(zero);
+const three = [1, 2, 3, 4, 5, 6].find(P.Predicate_.not((x) => x < 3));
 const four = P.pipe(
   zero,
   P.function_.increment,
   P.function_.increment,
   P.function_.increment,
   P.function_.increment,
-)
+);
 
-function yesOrNo(input: boolean): 'yes'|'no' {
+function yesOrNo(input: boolean): 'yes' | 'no' {
   if (input === true) {
-    return 'yes'
+    return 'yes';
   }
   if (input === false) {
-    return 'no'
+    return 'no';
   }
-  return P.absurd(input)
+  return P.absurd(input);
 }
 ```
 
 ### boolean
 
-* [boolean](https://gcanti.github.io/fp-ts/modules/boolean.ts.html)
+- [boolean](https://gcanti.github.io/fp-ts/modules/boolean.ts.html)
 
 ```typescript
-const bool: boolean = true
-const boolConstant: true = true
+const bool: boolean = true;
+const boolConstant: true = true;
 ```
 
 ### string
 
-* [string](https://gcanti.github.io/fp-ts/modules/number.ts.html)
+- [string](https://gcanti.github.io/fp-ts/modules/number.ts.html)
 
 ```typescript
-const string: string = 'foo'
-const strConstant: 'foo' = 'foo'
+const string: string = 'foo';
+const strConstant: 'foo' = 'foo';
 ```
 
 ### number
 
-* [number](https://gcanti.github.io/fp-ts/modules/number.ts.html)
+- [number](https://gcanti.github.io/fp-ts/modules/number.ts.html)
 
 ```typescript
-const number: number = 123
-const numConstant: 123 = 123
+const number: number = 123;
+const numConstant: 123 = 123;
 ```
 
 ### Array
 
-* [Array](https://gcanti.github.io/fp-ts/modules/Array.ts.html)
-* [NonEmptyArray](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html) array with at least one item
+- [Array](https://gcanti.github.io/fp-ts/modules/Array.ts.html)
+- [NonEmptyArray](https://gcanti.github.io/fp-ts/modules/NonEmptyArray.ts.html) array with at least one item
 
 ```typescript
-const array: Array<string|number> = ['foo', 123, 'bar', 456]
+const array: Array<string | number> = ['foo', 123, 'bar', 456];
 ```
 
 ### Tuple
 
-* [Tuple](https://gcanti.github.io/fp-ts/modules/Tuple.ts.html)
-* [Apply_.sequenceT](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequencet)
+- [Tuple](https://gcanti.github.io/fp-ts/modules/Tuple.ts.html)
+- [Apply\_.sequenceT](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequencet)
 
 ```typescript
-const pair: [string, number] = ['foo', 123]
+const pair: [string, number] = ['foo', 123];
 ```
 
 ### Record
 
-* [Record](https://gcanti.github.io/fp-ts/modules/Record.ts.html) key/value mapping
+- [Record](https://gcanti.github.io/fp-ts/modules/Record.ts.html) key/value mapping
 
 ```typescript
-const record: Record<string, string|number> = {
+const record: Record<string, string | number> = {
   foo: 'foo',
-  bar: 123
-}
+  bar: 123,
+};
 ```
 
 ### Struct
 
-* [Apply_.sequenceS](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequences)
+- [Apply\_.sequenceS](https://gcanti.github.io/fp-ts/modules/Apply.ts.html#sequences)
 
 ```typescript
-const struct: { foo: string, bar: number } = {
+const struct: { foo: string; bar: number } = {
   foo: 'foo',
-  bar: 123
-}
+  bar: 123,
+};
 ```
 
 ### Option
 
-* [Option](https://gcanti.github.io/fp-ts/modules/Option.ts.html) value or "null"
+- [Option](https://gcanti.github.io/fp-ts/modules/Option.ts.html) value or "null"
 
 ```typescript
-
 const anOptionalValue: P.Option<number> = {
   _tag: 'Some',
-  value: 123
-}
+  value: 123,
+};
 // or
-const anOptionalValue2: P.Option<number> = P.Option_.some(123)
+const anOptionalValue2: P.Option<number> = P.Option_.some(123);
 
 const noOptionalValue: P.Option<number> = {
   _tag: 'None',
-}
+};
 // or
-const noOptionalValue2: P.Option<number> = P.Option_.none
+const noOptionalValue2: P.Option<number> = P.Option_.none;
 ```
 
 ### Either
 
-* [Either](https://gcanti.github.io/fp-ts/modules/Either.ts.html) value or error
+- [Either](https://gcanti.github.io/fp-ts/modules/Either.ts.html) value or error
 
 ```typescript
-
 // type aliases are useful for humans and maintainability
-type Failure = string
+type Failure = string;
 
 const eitherSucess: P.Either<Failure, number> = {
   _tag: 'Right',
   right: 123,
-}
+};
 // or
-const eitherSucess2: P.Either<Failure, number> = P.Either_.right(123)
+const eitherSucess2: P.Either<Failure, number> = P.Either_.right(123);
 
 const eitherFailure: P.Either<Failure, number> = {
   _tag: 'Left',
   left: 'Unable to calculate number',
-}
+};
 // or
-const failure2: P.Either<Failure, number> = P.Either_.left('Unable to calculate number')
+const failure2: P.Either<Failure, number> = P.Either_.left('Unable to calculate number');
 
-type Divide = (d: number) => (i: number) => P.Either<Failure, number>
+type Divide = (d: number) => (i: number) => P.Either<Failure, number>;
 const divide: Divide = (divider) => {
   return (input) => {
     if (divider === 0) {
@@ -371,28 +356,29 @@ const divide: Divide = (divider) => {
       right: input / divider,
     };
   };
-}
+};
 // or
-const divide2: Divide = (divider) => (input) => P.pipe(
- P.Either_.right(divider),
- P.Either_.filterOrElse(
-   (d) => d !== 0,
-   () => 'Division by zero error'
- ),
- P.Either_.map((d) => input / d),
-);
+const divide2: Divide = (divider) => (input) =>
+  P.pipe(
+    P.Either_.right(divider),
+    P.Either_.filterOrElse(
+      (d) => d !== 0,
+      () => 'Division by zero error',
+    ),
+    P.Either_.map((d) => input / d),
+  );
 ```
 
 ### These
 
-* [These](https://gcanti.github.io/fp-ts/modules/These.ts.html) extends either with `both` that can be used for warnings.
+- [These](https://gcanti.github.io/fp-ts/modules/These.ts.html) extends either with `both` that can be used for warnings.
 
 ### Lazy
 
 Lazy is used for wrapping pure but heavy computations in a "thunk" `() => factorize(someBigNumber)`.
 It lets the caller discard the result without evaluating the computationaly heavy part.
 
-* [Lazy](https://gcanti.github.io/fp-ts/modules/function.ts.html#lazy-interface)
+- [Lazy](https://gcanti.github.io/fp-ts/modules/function.ts.html#lazy-interface)
 
 ### IO
 
@@ -401,50 +387,48 @@ It lets the caller discard the result without executing the computation.
 Unlike with Lazy functions, the computations are free to have side effects.
 For example printing on the screen or returning a random number.
 
-* [IO](https://gcanti.github.io/fp-ts/modules/IO.ts.html)
-* [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts.html)
+- [IO](https://gcanti.github.io/fp-ts/modules/IO.ts.html)
+- [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts.html)
 
 ```typescript
-const printHello: P.IO<void> = () => console.log('hello')
+const printHello: P.IO<void> = () => console.log('hello');
 // or
-const printHello2: P.IO<void> = P.Console_.log('hello')
+const printHello2: P.IO<void> = P.Console_.log('hello');
 
-type Printer = (x: unknown) => P.IO<void>
-const printer: Printer = (x) => () => console.log(x)
+type Printer = (x: unknown) => P.IO<void>;
+const printer: Printer = (x) => () => console.log(x);
 // or
-const printer2: Printer = P.Console_.log
+const printer2: Printer = P.Console_.log;
 
-type SumPrinter = (y: number) => (x: number) => P.IO<void>
-const printSum: SumPrinter = (y) => (x) => () => console.log(x + y)
+type SumPrinter = (y: number) => (x: number) => P.IO<void>;
+const printSum: SumPrinter = (y) => (x) => () => console.log(x + y);
 // or
-const printSum2: SumPrinter = (y) => (x) => P.Console_.log(x + y)
+const printSum2: SumPrinter = (y) => (x) => P.Console_.log(x + y);
 
-type Dice = (sides: number) => P.IO<number>
-const dice: Dice = (sides) => () => 1 + Math.floor(Math.random() * sides)
+type Dice = (sides: number) => P.IO<number>;
+const dice: Dice = (sides) => () => 1 + Math.floor(Math.random() * sides);
 // or
-const dice2: Dice = (sides) => P.Random_.randomInt(1, sides)
+const dice2: Dice = (sides) => P.Random_.randomInt(1, sides);
 
-type D6 = P.IO<number>
-const d6: D6 = dice(6)
+type D6 = P.IO<number>;
+const d6: D6 = dice(6);
 
 // P.IOEither<A, B> is the same as P.IO<P.Either<A, B>>
-type D6Divider = (i: number) => P.IOEither<Failure, number>
+type D6Divider = (i: number) => P.IOEither<Failure, number>;
 const d6Divider: D6Divider = (input) => () => {
   const diceRoll = d6();
   const logger = printer(diceRoll);
   logger();
-  const diveByDiceRoll = divide(diceRoll)
+  const diveByDiceRoll = divide(diceRoll);
   return diveByDiceRoll(input);
-}
+};
 // or
-const d6Divider2: D6Divider = (input) => P.pipe(
-  d6,
-  P.IO_.chainFirst(P.Console_.log),
-  P.IO_.map((diceRoll) => P.pipe(
-    input,
-    divide(diceRoll),
-  )),
-)
+const d6Divider2: D6Divider = (input) =>
+  P.pipe(
+    d6,
+    P.IO_.chainFirst(P.Console_.log),
+    P.IO_.map((diceRoll) => P.pipe(input, divide(diceRoll))),
+  );
 ```
 
 ### Task
@@ -453,47 +437,52 @@ Task wraps asynchronous effects in a "thunk" `async () => { ... your code goes h
 It is a way of letting the caller discard the result without executing the computation.
 Task is essentially same as IO but uses promises to wrap asynchronous return values.
 
-* [Task](https://gcanti.github.io/fp-ts/modules/Task.ts.html)
-* [TaskOption](https://gcanti.github.io/fp-ts/modules/TaskOption.ts.html)
-* [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts.html)
-* [TaskThese](https://gcanti.github.io/fp-ts/modules/TaskThese.ts.html)
+- [Task](https://gcanti.github.io/fp-ts/modules/Task.ts.html)
+- [TaskOption](https://gcanti.github.io/fp-ts/modules/TaskOption.ts.html)
+- [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts.html)
+- [TaskThese](https://gcanti.github.io/fp-ts/modules/TaskThese.ts.html)
 
 ```typescript
 // Task and TaskEither is similar to IO and IOEither but work with Promises
-type AsyncPrinter = <S>(s: S) => P.Task<void>
-const asyncPrinter: AsyncPrinter = (x) => async () => console.log(x)
+type AsyncPrinter = <S>(s: S) => P.Task<void>;
+const asyncPrinter: AsyncPrinter = (x) => async () => console.log(x);
 // or
-const asyncPrinter2: AsyncPrinter = P.Task_.fromIOK(P.Console_.log)
+const asyncPrinter2: AsyncPrinter = P.Task_.fromIOK(P.Console_.log);
 ```
 
 ### Reader
 
 Reader is used for injecting dependencies before executing the computation
 
-* [Reader](https://gcanti.github.io/fp-ts/modules/Reader.ts.html)
-* [ReaderEither](https://gcanti.github.io/fp-ts/modules/ReaderEither.ts.html)
-* [ReaderTask](https://gcanti.github.io/fp-ts/modules/ReaderTask.ts.html)
-* [ReaderTaskEither](https://gcanti.github.io/fp-ts/modules/ReaderTaskEither.ts.html)
+- [Reader](https://gcanti.github.io/fp-ts/modules/Reader.ts.html)
+- [ReaderEither](https://gcanti.github.io/fp-ts/modules/ReaderEither.ts.html)
+- [ReaderTask](https://gcanti.github.io/fp-ts/modules/ReaderTask.ts.html)
+- [ReaderTaskEither](https://gcanti.github.io/fp-ts/modules/ReaderTaskEither.ts.html)
 
 ```typescript
 // ReaderTaskEither takes dependencies and returns a task with result
-type WithoutDeps = (i: number) => P.ReaderTaskEither<{ print: AsyncPrinter }, Failure, number>
-const withoutDeps: WithoutDeps = (input) => ({ print }) => async () => {
-  const diceRoll = d6();
-  const logger = print(diceRoll);
-  await logger();
-  const diveByDiceRoll = divide(diceRoll)
-  return diveByDiceRoll(input);
-}
+type WithoutDeps = (
+  i: number,
+) => P.ReaderTaskEither<{ print: AsyncPrinter }, Failure, number>;
+const withoutDeps: WithoutDeps =
+  (input) =>
+  ({ print }) =>
+  async () => {
+    const diceRoll = d6();
+    const logger = print(diceRoll);
+    await logger();
+    const diveByDiceRoll = divide(diceRoll);
+    return diveByDiceRoll(input);
+  };
 // or
-const withoutDeps2: WithoutDeps = (input) => ({ print }) => P.pipe(
-  P.Task_.fromIO(d6),
-  P.Task_.chainFirst(print),
-  P.Task_.map((diceRoll) => P.pipe(
-    input,
-    divide(diceRoll),
-  )),
-)
+const withoutDeps2: WithoutDeps =
+  (input) =>
+  ({ print }) =>
+    P.pipe(
+      P.Task_.fromIO(d6),
+      P.Task_.chainFirst(print),
+      P.Task_.map((diceRoll) => P.pipe(input, divide(diceRoll))),
+    );
 ```
 
 ## Functional Programming
@@ -509,8 +498,8 @@ API and prints out the user information.
 import { Errors as ValidationErrors } from 'io-ts-validator';
 
 type Api = {
-  userInfo: (userId: number) => Promise<string>
-}
+  userInfo: (userId: number) => Promise<string>;
+};
 const api: Api = {
   userInfo: (userId) => {
     return Promise.resolve(JSON.stringify({ userId: userId, name: 'Bob' }));
@@ -520,10 +509,16 @@ const api: Api = {
 const logResult = (result: unknown) => () => console.log(result);
 
 const main = pipe(
-  P.TaskEither_.tryCatch(() => api.userInfo(123), (error) => ({ error: 'API Error', info: [String(error)] })),
+  P.TaskEither_.tryCatch(
+    () => api.userInfo(123),
+    (error) => ({ error: 'API Error', info: [String(error)] }),
+  ),
   P.TaskEither_.chain((response) =>
-  P.TaskEither_.fromEither(
-      P.Either_.tryCatch(() => JSON.parse(response), (error) => ({ error: 'Parse Error', info: [String(error)] })),
+    P.TaskEither_.fromEither(
+      P.Either_.tryCatch(
+        () => JSON.parse(response),
+        (error) => ({ error: 'Parse Error', info: [String(error)] }),
+      ),
     ),
   ),
   P.TaskEither_.chain((json) =>
@@ -533,7 +528,10 @@ const main = pipe(
       P.TaskEither_.fromEither,
     ),
   ),
-  P.TaskEither_.fold((error) => P.Task_.fromIO(logResult(error)), (user) => P.Task_.fromIO(logResult(user))),
+  P.TaskEither_.fold(
+    (error) => P.Task_.fromIO(logResult(error)),
+    (user) => P.Task_.fromIO(logResult(user)),
+  ),
 );
 
 main();
@@ -543,19 +541,17 @@ main();
 
 The code example in previous chapter doesn't have many type signatures. This is not a problem since TypeScript is often able to infer the types for your code as long as you are using typesafe building blocks. Indeed, that is one of the reasons what makes functional programming a good match for strongly typed code.
 
-Even thought explicit variable names and type signatures are not necessary for the compiler. It is often a good idea to provide some to make the code more readable. When you are building your first application it is a good idea to write type signatures for every tiny piece of the puzzle. This will help you pinpoint down possible errors in your code. Below is the code example from previous chapter with *way too many* type signatures. However, this is exactly what you might want to confirm that the type inferance matches your expectation. You may then remove unnecessary clutter as you get more confident about your work.
+Even thought explicit variable names and type signatures are not necessary for the compiler. It is often a good idea to provide some to make the code more readable. When you are building your first application it is a good idea to write type signatures for every tiny piece of the puzzle. This will help you pinpoint down possible errors in your code. Below is the code example from previous chapter with _way too many_ type signatures. However, this is exactly what you might want to confirm that the type inferance matches your expectation. You may then remove unnecessary clutter as you get more confident about your work.
 
 ```typescript
-
-type BuildMain = P.ReaderTask<{ api: Api }, void>
+type BuildMain = P.ReaderTask<{ api: Api }, void>;
 const buildMain: BuildMain = ({ api }) => {
-
   // IO Type Definitions
 
   type UserC = t.Type<{
-    userId: number,
-    name: string,
-  }>
+    userId: number;
+    name: string;
+  }>;
   const User: UserC = t.type({
     userId: t.number,
     name: t.string,
@@ -588,24 +584,38 @@ const buildMain: BuildMain = ({ api }) => {
     info: Array<string>;
   }
   const ErrorInfo_ = {
-    fromApiError: (error: unknown): ErrorInfo => ({ error: Errors.Api, info: [String(error)] }),
-    fromParseError: (error: unknown): ErrorInfo => ({ error: Errors.Parse, info: [String(error)] }),
-    fromDecodeError: (errors: ValidationErrors): ErrorInfo => ({ error: Errors.Decode, info: errors }),
+    fromApiError: (error: unknown): ErrorInfo => ({
+      error: Errors.Api,
+      info: [String(error)],
+    }),
+    fromParseError: (error: unknown): ErrorInfo => ({
+      error: Errors.Parse,
+      info: [String(error)],
+    }),
+    fromDecodeError: (errors: ValidationErrors): ErrorInfo => ({
+      error: Errors.Decode,
+      info: errors,
+    }),
   };
 
   // Architecture Description
 
   type ResponseRetriever = P.TaskEither<ErrorInfo, Response>;
-  type ResponseParser = (s: P.TaskEither<ErrorInfo, Response>) => P.TaskEither<ErrorInfo, Json>;
+  type ResponseParser = (
+    s: P.TaskEither<ErrorInfo, Response>,
+  ) => P.TaskEither<ErrorInfo, Json>;
   type UserDecoder = (j: P.TaskEither<ErrorInfo, Json>) => P.TaskEither<ErrorInfo, User>;
   type ResultReporter = (j: P.TaskEither<ErrorInfo, User>) => P.Task<void>;
 
   // Functional Implementation
 
-  const responseRetriever: ResponseRetriever = P.TaskEither_.tryCatch((): Promise<Response> => {
-    // failure and effects are OK inside TaskEither
-    return api.userInfo(123);
-  }, ErrorInfo_.fromApiError);
+  const responseRetriever: ResponseRetriever = P.TaskEither_.tryCatch(
+    (): Promise<Response> => {
+      // failure and effects are OK inside TaskEither
+      return api.userInfo(123);
+    },
+    ErrorInfo_.fromApiError,
+  );
 
   const responseParser: ResponseParser = P.TaskEither_.chain(
     (response: Response): P.TaskEither<ErrorInfo, Json> => {
@@ -620,9 +630,14 @@ const buildMain: BuildMain = ({ api }) => {
 
   const responseDecoder: UserDecoder = P.TaskEither_.chain(
     (json: Json): P.TaskEither<ErrorInfo, User> => {
-      type ErrorTransform = (r: P.Either<ValidationErrors, User>) => P.Either<ErrorInfo, User>;
-      const errorTransform: ErrorTransform = P.Either_.mapLeft(ErrorInfo_.fromDecodeError);
-      const rawDecodeResult: P.Either<ValidationErrors, User> = validator(User).decodeEither(json);
+      type ErrorTransform = (
+        r: P.Either<ValidationErrors, User>,
+      ) => P.Either<ErrorInfo, User>;
+      const errorTransform: ErrorTransform = P.Either_.mapLeft(
+        ErrorInfo_.fromDecodeError,
+      );
+      const rawDecodeResult: P.Either<ValidationErrors, User> =
+        validator(User).decodeEither(json);
 
       const decodeResult: P.Either<ErrorInfo, User> = errorTransform(rawDecodeResult);
       return P.TaskEither_.fromEither(decodeResult);
@@ -640,16 +655,16 @@ const buildMain: BuildMain = ({ api }) => {
     },
   );
 
-  return resultReporter(responseDecoder(responseParser(responseRetriever)))
-}
+  return resultReporter(responseDecoder(responseParser(responseRetriever)));
+};
 
 const strictMain: P.Task<void> = buildMain({
   api: {
     userInfo: (userId: number): Promise<string> => {
       return Promise.resolve(JSON.stringify({ userId: userId, name: 'Bob' }));
     },
-  }
-})
+  },
+});
 
 // Our entire application is typesafe up to this point.  The execution of the
 // main Task<void> (below) breaks referential transparency and returns
