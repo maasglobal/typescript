@@ -1,6 +1,6 @@
 {
   "extends": [
-    "eslint-config-maasglobal-ts"
+    "eslint-config-maasglobal-ts/strict"
   ],
   "rules": {
     "simple-import-sort/sort": [
@@ -23,9 +23,7 @@
         "@typescript-eslint/no-inferrable-types": 0,
         "@typescript-eslint/no-unused-vars": 0,
         "@typescript-eslint/prefer-as-const": 0,
-        "import/order": 0,
-        "no-restricted-imports": 0,
-        "prettier/prettier": 0,
+        "import/no-duplicates": 0,
         "simple-import-sort/sort": 0
       }
     }

@@ -1555,10 +1555,10 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-maasglobal-ts@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/eslint-config-maasglobal-ts/-/eslint-config-maasglobal-ts-0.0.11.tgz#ae7231cd3f990aba25e614a4bd14cfaa7cb7f0d4"
-  integrity sha512-+EAJZDSzKzqDy88foZds78Qa/IvqvDWezR6/qy7Dw7xsNoYlaFjDuBHx7/1HLm3iSvbM7p7eJRpTNGM0T4cbRg==
+eslint-config-maasglobal-ts@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/eslint-config-maasglobal-ts/-/eslint-config-maasglobal-ts-0.0.13.tgz#1c2f1658ba74a4d803629e3466cc625a6051b59f"
+  integrity sha512-sOquEedcBMOUmEBU7qrT0Puc46GspbuChcGivKIzMQcR10caRq7p1PVDfPUlXMSqPUgIt/4y0y1tZHrVFlZJzQ==
 
 eslint-config-prettier@^6.12.0:
   version "6.15.0"
