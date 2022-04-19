@@ -46,7 +46,9 @@
     "test": "jest --no-cache",
     "typecheck": "tsc -p src/tsconfig.json",
     "eslint": "eslint --max-warnings=0 '**/*.{ts,js}'",
-    "prettify": "yarn eslint --fix||true",
+    "eslint-fix": "yarn eslint --fix||true",
+    "prettier": "prettier --write --ignore-path .gitignore --config node_modules/eslint-config-maasglobal-ts/prettierrc.js '**/*.{css,html,js,ts,json,md,yaml,yml}'",
+    "prettify": "yarn eslint-fix && yarn prettier",
     "lint": "yarn eslint",
     "ci": "yarn readme-ts && yarn typecheck && yarn test && yarn lint"
   }
