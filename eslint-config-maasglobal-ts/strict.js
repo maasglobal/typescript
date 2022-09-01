@@ -1,3 +1,6 @@
+
+/* eslint-disable @typescript-eslint/naming-convention */
+
 module.exports = {
   plugins: ['fp'],
   extends: ['./index.js', 'plugin:fp/recommended'],

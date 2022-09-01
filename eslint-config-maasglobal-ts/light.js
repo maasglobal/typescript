@@ -1,3 +1,6 @@
+
+/* eslint-disable @typescript-eslint/naming-convention */
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const prettierrc = require('./prettierrc.js');
 
@@ -9,7 +12,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
   ],
   rules: {
@@ -40,7 +42,7 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/order': 0,
     'import/named': 0,
-    'simple-import-sort/sort': 1,
+    'simple-import-sort/imports': 1,
     'prettier/prettier': [0, prettierrc],
   },
   overrides: [
