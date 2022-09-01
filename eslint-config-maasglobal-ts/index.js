@@ -1,3 +1,6 @@
+
+/* eslint-disable @typescript-eslint/naming-convention */
+
 module.exports = {
   parserOptions: {
     project: './tsconfig.eslint.json',
