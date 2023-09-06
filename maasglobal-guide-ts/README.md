@@ -4,6 +4,142 @@ TypeScript has a relatively good [type system](https://typescriptlang.org/docs/)
 
 This guide attemps to explaing basics of working with a code base written in this manner. The guide covers basics of [type variables](https://www.typescriptlang.org/docs/handbook/generics.html#working-with-generic-type-variables), [io-ts](https://github.com/gcanti/io-ts/blob/master/README.md#implemented-types--combinators) and [fp-ts](https://gcanti.github.io/fp-ts/introduction/core-concepts.html) data structures.
 
+## Adding Type Signatures
+
+Consider the following tiny application that performs a dice roll with a single six-sided die.
+The code is quite compact and there isn't much room for type signatures.
+
+```typescript
+function diceMain1() {
+  console.log('rolled: ' + (1 + Math.floor(Math.random() * 6)));
+}
+```
+
+Breaking the code into smaller independent parts will let us add more type signatures.
+By moving parts of the code away from it's original context also increase the need for
+static typing since the individual parts might otherwise become incompatible with each
+other.
+
+Applications typically consist of some pure functions and some impure procedures. The
+pure functions work deterministicly producing the same output for the same inputs, and
+do not have any side-effects such as logging or networking. The impure procedures are
+free to be nondeterministic and can do any effects.
+
+Pure functions are in general easier to work with since they don't depend on order
+or amount of invocations. For example, you can safely cache the return value of a pure
+function, or you can safely remove the cache and call it several times. Let's start
+refactoring `diceMain1` by defining some primitive types and extracting parts that
+can be easily turned into pure functions.
+
+```typescript
+// number x, 0 <= x < 1
+type Ratio = number;
+
+// amount of sides on a die
+type Sides = number;
+
+// a number printed on a die
+type Roll = number;
+
+// text to be displayed as part of the user interface
+type Printable = string;
+
+type RollFromRatio = (s: Sides) => (r: Ratio) => Roll;
+type PrintableFromRoll = (r: Roll) => Printable;
+
+const rollFromRatio: RollFromRatio = (sides) => (ratio) => 1 + Math.floor(ratio * sides);
+const printableFromRoll: PrintableFromRoll = (roll) => `rolled: ${roll}`;
+```
+
+We can then proceed by breaking the remaining code into several impure procedures that
+use the the pure library functions from above to implement the same application in a more
+structured manner.
+
+```typescript
+type RollDie = (s: Sides) => Roll;
+type LogRoll = (r: Roll) => void;
+type Main2 = () => void;
+
+const rollDie: RollDie = (sides) => {
+  const ratio = Math.random();
+  return rollFromRatio(sides)(ratio);
+};
+const logRoll: LogRoll = (roll) => {
+  console.log(printableFromRoll(roll));
+};
+
+const diceMain2: Main2 = () => {
+  logRoll(rollDie(6));
+};
+```
+
+In the example above `rollDie` procedure is impure because it contains a random element
+and therefore produces different results for the same input. The `logRoll` procedure is
+impure because it causes logging to happen. It's result clearly depends on when, and how
+many times, the computation is executed. Finally, `diceMain2` is obviously impure since
+it does both random and logging.
+
+In order to minimize the amount of impure procedures, it is possible to split them into
+two parts -- a pure function that takes arguments and produces an impure computation
+with no arguments. This way the caller can decide wether or not they wish to execute
+the computation and deal with the effects and nondeterminism. Below is the same
+code example restructured in this manner.
+
+```typescript
+// impure computation that returns T
+type IO<T> = () => T;
+
+// pure functions
+type RollDie3 = (s: Sides) => IO<Roll>;
+type LogRoll3 = (r: Roll) => IO<void>;
+
+type Main3 = IO<void>;
+
+const rollDie3: RollDie3 = (sides) => {
+  const fr = rollFromRatio(sides);
+  return () => {
+    const ratio = Math.random();
+    return fr(ratio);
+  };
+};
+
+const logRoll3: LogRoll3 = (roll) => {
+  const printable = printableFromRoll(roll);
+  return () => {
+    console.log(printable);
+  };
+};
+
+const rollSixSided3 = rollDie3(6);
+
+const diceMain3: Main3 = () => {
+  const roll = rollSixSided3();
+  const logger = logRoll3(roll);
+  logger();
+};
+```
+
+We can use tooling from a functional programming library such as fp-ts to hide
+some of the complexity related to combining individual IO thunks into a single
+application. Below is one more iteration of the same code example but this time
+none of the IO thunks are visible in the apllication source code. Note however,
+that the types match those from the previous iteration.
+
+```typescript
+import { log } from 'fp-ts/Console';
+import { flow, pipe } from 'fp-ts/function';
+import { chain, map } from 'fp-ts/IO';
+import { random } from 'fp-ts/Random';
+
+const rollDie4: RollDie3 = (sides) => pipe(random, map(rollFromRatio(sides)));
+
+const logRoll4: LogRoll3 = flow(printableFromRoll, log);
+
+const rollSixSided4 = rollDie4(6);
+
+const diceMain4: Main3 = pipe(rollSixSided4, chain(logRoll4));
+```
+
 ## Type Variables
 
 TypeScript throws away the types of your function inputs by default.
@@ -42,7 +178,7 @@ const increment = <A extends number>(a: A) => a + 1;
 The code base makes heavy use of pipelines. Pipelines are the Javascript equivalent for UNIX pipes (the `ls|grep omg` sort of thing). The [pipeline operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Pipeline_operator) `|>` is an upcoming starndard. TypeScript is currently [waiting](https://github.com/microsoft/TypeScript/issues/17718) for TC39 standardization. However, fp-ts provides a similar `pipe` function that works today. It works as follows.
 
 ```typescript
-import { pipe } from 'fp-ts/lib/function';
+// import { pipe } from 'fp-ts/lib/function';
 
 pipe(5, double, double, increment, double); // 42
 ```
