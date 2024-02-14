@@ -1,3 +1,6 @@
 {
-  "include": ["index.js", "light.js", "prettierrc.js", "strict.js"]
+  "include": ["index.js", "light.js", "prettierrc.js", "strict.js"],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
 }
